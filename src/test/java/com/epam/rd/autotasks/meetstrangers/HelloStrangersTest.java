@@ -17,6 +17,40 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class HelloStrangersTest {
 
+    static Stream<List<String>> regularCases() {
+        return Stream.of(
+                List.of("Angus"),
+                List.of("Agent Smith"),
+                List.of("Kiefer William Frederick Dempsey George Rufus Sutherland")
+        );
+    }
+
+    static Stream<List<String>> randomNames() {
+        String[] names = {
+                "John", "Dave", "Martin",
+                "Jimmy", "Robert", "Paul",
+                "Darth Vader", "Bilbo Baggins",
+                "Carl Johnson", "Wastelander",
+                "Billy Harrington", "R2-D2",
+                "C-3PO", "1+-Pro-100-Tascher-+1"
+        };
+        return Stream.of(
+                filler(names),
+                filler(names),
+                filler(names),
+                filler(names),
+                filler(names)
+        );
+    }
+
+    static ArrayList<String> filler(String[] names) {
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i <= (int) (Math.random() * 100) % 10; i++) {
+            list.add(names[(int) (Math.random() * 100) % names.length]);
+        }
+        return list;
+    }
+
     private String runMain(String... lines) throws Exception {
         return tapSystemOutNormalized(() ->
                 withTextFromSystemIn(lines)
@@ -55,39 +89,5 @@ public class HelloStrangersTest {
         String actual = runMain(inputLines).strip();
 
         assertEquals(expected, actual);
-    }
-
-    static Stream<List<String>> regularCases() {
-        return Stream.of(
-                List.of("Angus"),
-                List.of("Agent Smith"),
-                List.of("Kiefer William Frederick Dempsey George Rufus Sutherland")
-        );
-    }
-
-    static Stream<List<String>> randomNames() {
-        String[] names = {
-                "John", "Dave", "Martin",
-                "Jimmy", "Robert", "Paul",
-                "Darth Vader", "Bilbo Baggins",
-                "Carl Johnson", "Wastelander",
-                "Billy Harrington", "R2-D2",
-                "C-3PO", "1+-Pro-100-Tascher-+1"
-        };
-        return Stream.of(
-                filler(names),
-                filler(names),
-                filler(names),
-                filler(names),
-                filler(names)
-        );
-    }
-
-    static ArrayList<String> filler(String[] names) {
-        ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i <= (int) (Math.random() * 100) % 10; i++) {
-            list.add(names[(int) (Math.random() * 100) % names.length]);
-        }
-        return list;
     }
 }
